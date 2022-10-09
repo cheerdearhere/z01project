@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- root element는 mapper -->
+<!--속성 namespace는 IDao interface의 경로 -->
+<mapper namespace="com.team03.prototype.dao.IBoardDao">
+		<!-- product manage -->
+	<select id="productList" resultType="com.team03.prototype.dto.PTProductDto">
+		SELECT * FROM PTPRODUCT ORDER BY PID DESC
+	</select>
+	<insert id="productwrite" parameterType="com.team03.prototype.dto.PTProductDto">
+		INSERT INTO PTPRODUCT (PID,PTYPE,PNAME,PPRICE,PQUANTY,PCONTENT,PPHOTO,PBOARD,PSTATE,PCOLOR,PSIZE)
+		VALUES(PTPRODUCT_SEQ.NEXTVAL, #{pType},#{pName},#{pPrice},#{pQuanty},#{pContent},#{pPhoto},#{pBoard},#{pState},#{pColor},#{pSize})
+	</insert>
+	<select id="pmProductView" parameterType="int" resultType="com.team03.prototype.dto.PTProductDto">
+		SELECT * FROM PTPRODUCT WHERE PID = #{pId}
+	</select>
+	<select id="productView" parameterType="int" resultType="com.team03.prototype.dto.PTProductDto">
+		SELECT * FROM PTPRODUCT WHERE PID = #{pId}
+	</select>
+	<update id="productHitCheck" parameterType="int">
+		UPDATE PTPRODUCT SET PHIT=PHIT+1 WHERE PID=#{pId}
+	</update>
+	<update id="pmProductUpdate" parameterType="com.team03.prototype.dto.PTProductDto">
+		UPDATE PTPRODUCT 
+		SET PTYPE=#{pType},PNAME=#{pName},PPRICE=#{pPrice},PQUANTY=#{pQuanty},PCONTENT=#{pContent},PPHOTO=#{pPhoto},PBOARD=#{pBoard},PSTATE=#{pState},PCOLOR=#{pColor},PSIZE=#{pSize}
+		WHERE PID=#{pId}
+	</update>
+	<delete id="productDelete" parameterType="int">
+		DELETE FROM PTPRODUCT WHERE PID=#{pId}
+	</delete>
+	<!-- home/main -->
+	<select id="homeView" resultType="com.team03.prototype.dto.HomeDto">
+		SELECT * FROM HMPAGE
+	</select>
+	<update id="homeWrite" parameterType="com.team03.prototype.dto.HomeDto">
+		UPDATE HMPAGE SET HMDATE=#{hmDate},HMSLIDE0=#{hmSlide0},HMSLIDE1=#{hmSlide1},HMSLIDE2=#{hmSlide2},
+		HMMAIN=#{hmMain},HMINSTAR=#{hmInstar},HMYOUTUBE=#{hmYoutube}
+	</update>
+	
+	<!-- user review Board-->
+	<select id="userReviewList" parameterType="String" resultType="com.team03.prototype.dto.PTrBoardDto">
+		<![CDATA[
+			SELECT * FROM (SELECT A.*,ROWNUM AS RNUM
+			FROM(SELECT * FROM REVIEWBOARD WHERE UEMAIL=#{uEmail} ORDER BY RGROUP DESC,RSTEP ASC)A)
+			WHERE RNUM < 11
+		]]>	
+	</select>
+	<select id="productReviewList" parameterType="int" resultType="com.team03.prototype.dto.PTrBoardDto">
+		<![CDATA[
+			SELECT * FROM (SELECT A.*,ROWNUM AS RNUM
+			FROM(SELECT * FROM REVIEWBOARD WHERE PID=#{pId} ORDER BY RGROUP DESC,RSTEP ASC)A)
+			WHERE RNUM < 11
+		]]>	
+	</select>
+	<!-- all review -->
+	<select id="reviewList" resultType="com.team03.prototype.dto.PTrBoardDto">
+		<![CDATA[
+			SELECT * FROM (SELECT A.*,ROWNUM AS RNUM
+			FROM(SELECT * FROM REVIEWBOARD ORDER BY RGROUP DESC,RSTEP ASC)A)
+			WHERE RNUM < 11
+		]]>
+	</select>
+	
+	<!-- pagination -->	
+	<select id="pageList" parameterType="int" resultType="com.team03.prototype.dto.PTrBoardDto">
+		<![CDATA[
+			SELECT * FROM(SELECT A.*,ROWNUM AS RNUM
+			FROM(SELECT * FROM REVIEWBOARD ORDER BY BGROUP DESC,BSTEP ASC)A)
+			WHERE RNUM >= #{startNo} AND RNUM <= #{startNo} + 9
+		]]>
+	</select>
+	<!-- search -->
+	<select id="searchList" resultType="com.team03.prototype.dto.PTrBoardDto">
+		SELECT * FROM REVIEWBOARD ORDER BY RGROUP DESC,RSTEP ASC
+	</select>
+	<select id="userSearchList" parameterType="String" resultType="com.team03.prototype.dto.PTrBoardDto">
+		SELECT * FROM REVIEWBOARD WHERE UEMAIL=#{uEmail} ORDER BY RGROUP DESC,RSTEP ASC
+	</select>
+
+	<insert id="rWrite" parameterType="com.team03.prototype.dto.PTrBoardDto">
+      INSERT INTO REVIEWBOARD(RBID,PID,RTITLE,RCONTENT,RGROUP,RSTEP,RINDENT,UEMAIL) 
+      VALUES(REVIEWBOARD_SEQ.nextval,#{pId},#{rTitle,jdbcType=VARCHAR},#{rContent},REVIEWBOARD_SEQ.currval,0,0,#{uEmail})
+   </insert>	
+	<select id="rContentView" parameterType="int" resultType="com.team03.prototype.dto.PTrBoardDto">
+		SELECT * FROM REVIEWBOARD WHERE RBID = #{rbId}
+	</select>
+	<update id="rmodify" parameterType="com.team03.prototype.dto.PTrBoardDto">
+		UPDATE REVIEWBOARD SET RTITLE = #{rTitle},RCONTENT = #{rContent} WHERE RBID = #{rbId}
+	</update>
+	<delete id="rdelete" parameterType="int">
+		DELETE FROM REVIEWBOARD WHERE RBID = #{rbId}
+	</delete>
+	
+	<!-- review reply -->
+	<select id="replyView" parameterType="int" resultType="com.team03.prototype.dto.PTrBoardDto">
+		SELECT * FROM REVIEWBOARD WHERE RBID = #{rbId}
+	</select>
+	<insert id="reply" parameterType="com.team03.prototype.dto.PTrBoardDto">
+		INSERT INTO REVIEWBOARD(RBID,RTITLE,RCONTENT,RGROUP,RSTEP,RINDENT)
+		VALUES(REVIEWBOARD_SEQ.nextval,#{rTitle},#{rContent},#{rGroup},#{rStep}+1,#{rIndent}+1)
+	</insert>
+	<update id="replyShape" parameterType="com.team03.prototype.dto.PTrBoardDto">
+		<![CDATA[
+			UPDATE REVIEWBOARD SET RSTEP=${rStep}+1 WHERE RGROUP=#{rGroup} AND RSTEP > #{rStep,jdbcType=VARCHAR}
+		]]>		
+	</update>	
+	<!-- SHOPPING PAGE LOAD -->
+	<select id="bottomList" resultType="com.team03.prototype.dto.PTProductDto">
+		SELECT * FROM PTPRODUCT WHERE PSTATE='true' AND (PTYPE = 'pant' OR PTYPE ='skirt') ORDER BY PID DESC
+	</select>
+	<select id="outerList" resultType="com.team03.prototype.dto.PTProductDto">
+		SELECT * FROM PTPRODUCT WHERE PSTATE='true' AND PTYPE = 'outer' ORDER BY PID DESC
+	</select>
+	<select id="topList" resultType="com.team03.prototype.dto.PTProductDto">
+		SELECT * FROM PTPRODUCT WHERE PSTATE='true' AND PTYPE = 'top' ORDER BY PID DESC
+	</select>
+	<select id="etcList" resultType="com.team03.prototype.dto.PTProductDto">
+		SELECT * FROM PTPRODUCT WHERE PSTATE='true' AND PTYPE = 'etc' ORDER BY PID DESC
+	</select>
+	<select id="newList" resultType="com.team03.prototype.dto.PTProductDto">
+		SELECT * FROM PTPRODUCT WHERE PSTATE='true' AND PBOARD LIKE '%new%' ORDER BY PID DESC
+	</select>
+	<select id="bestList" resultType="com.team03.prototype.dto.PTProductDto">
+		SELECT * FROM PTPRODUCT WHERE PSTATE='true' AND PBOARD LIKE '%best%' ORDER BY PID DESC
+	</select>
+	<!-- ORDER-->
+	<insert id="orderSave" parameterType="com.team03.prototype.dto.PTOrderDto">
+		INSERT INTO ORDERDB (OPID,OPNAME,OPPRICE,OPQUANTY,OPTOTAL,OPCOLOR,OPSIZE,PID,UEMAIL,OPPHOTO)
+		VALUES(ORDERDB_SEQ.NEXTVAL,#{opName},#{opPrice},#{opQuanty},#{opPrice}*#{opQuanty},#{opColor},#{opSize},#{pId},#{uEmail},#{opPhoto})
+	</insert>
+	<select id="orderList" parameterType="String" resultType="com.team03.prototype.dto.PTOrderDto">
+		SELECT * FROM ORDERDB WHERE UEMAIL=#{uEmail} AND OPSTATE='saveonly'
+	</select>
+	<update id="orderRequest" parameterType="com.team03.prototype.dto.PTOrderDto">
+		<![CDATA[
+		UPDATE ORDERDB 
+		SET OPPRICE=#{opPrice},OPQUANTY=#{opQuanty},OPTOTAL=#{opTotal},OPPHOTO=#{opPhoto},OPSTATE=#{opState},
+		OPDATE=(sysdate),OPADDRESS=#{opAddress},OPPHONE=#{opPhone},OPREQUEST=#{opRequest},DISCOUNTID=#{discountID,jdbcType=VARCHAR}
+		WHERE OPID=#{opId} AND (SELECT PQUANTY FROM PTPRODUCT WHERE PID=#{pId}) >= #{opQuanty}
+		]]>
+	</update>
+	<update id="reduceQuanty" parameterType="com.team03.prototype.dto.PTOrderDto">
+		UPDATE PTPRODUCT SET PQUANTY = PQUANTY-#{opQuanty} WHERE OPID=#{opId}
+	</update>
+	<select id="userOrderedList" resultType="com.team03.prototype.dto.PTOrderDto" parameterType="String">
+		SELECT * FROM ORDERDB WHERE UEMAIL=#{uEmail} AND NOT OPSTATE = 'saveonly'
+	</select>
+	<select id="pmOrderList" resultType="com.team03.prototype.dto.PTOrderDto">
+		SELECT * FROM ORDERDB WHERE NOT OPSTATE = 'saveonly' ORDER BY OPID DESC
+	</select>
+	<update id="opStateModify" parameterType="com.team03.prototype.dto.PTOrderDto">
+		UPDATE ORDERDB 
+		SET OPSTATE=#{opState}
+		WHERE OPID=#{opId}
+	</update>
+	<select id="searchOrder" resultType="com.team03.prototype.dto.PTOrderDto">
+		SELECT * FROM ORDERDB WHERE NOT OPSTATE = 'saveonly' ORDER BY OPID DESC
+	</select>
+	<!-- page Information -->
+	<select id="productCurrentGraph" resultType="com.team03.prototype.dto.ProductCurrentGraphDto">
+		SELECT PTYPE, SUM(PHIT) AS VIEWS, COUNT(*) AS QUANTY FROM PTPRODUCT WHERE PSTATE ='true' GROUP BY PTYPE
+	</select>
+	<select id="orderStateCurrentGraph" resultType="com.team03.prototype.dto.OrderStateCurrentGraphDto">
+		SELECT OPSTATE, COUNT(*) AS OPQUANTY FROM ORDERDB GROUP BY OPSTATE
+	</select>
+	<select id="monthlyOrderData" resultType="com.team03.prototype.dto.MonthlyOrderDto">
+		SELECT TO_CHAR(OPDATE,'YYYY-MM') AS MONTHLYDATA, COUNT(*) AS ORDERS FROM ORDERDB 
+		WHERE NOT OPSTATE='saveonly' 
+		GROUP BY TO_CHAR(OPDATE,'YYYY-MM') ORDER BY MONTHLYDATA ASC
+	</select>
+	<select id="monthlyCompleteData" resultType="com.team03.prototype.dto.MonthlyOrderDto">
+		SELECT TO_CHAR(OPDATE,'YYYY-MM') AS MONTHLYDATA, COUNT(*) AS ORDERS FROM ORDERDB 
+		WHERE NOT OPSTATE='complete' 
+		GROUP BY TO_CHAR(OPDATE,'YYYY-MM') ORDER BY MONTHLYDATA ASC
+	</select>
+</mapper>
