@@ -112,7 +112,7 @@ public class PrototypeController {
 		this.passwordEncoder = passwordEncoder;
 		Constant.passwordEncoder = passwordEncoder;
 	}
-	//PTSecDao class bean
+	//PTSecDao class beans
 	private PTSecDao sdao;
 	@Autowired
 	public void setSdao(PTSecDao sdao) {
