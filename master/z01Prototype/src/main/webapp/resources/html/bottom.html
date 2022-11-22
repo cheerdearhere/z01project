@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>FormEx</title>
+<!--bootstrap-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+<!--jquery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!--propper jquery -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<!--latest javascript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+<!--fontawesome icon-->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+>
+<!--google icon -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+<link href="http://fonts.cdnfonts.com/css/helvetica-neue-9" rel="stylesheet">
+<link type="text/css" rel="stylesheet" href="/web/upload/131/source/swiper.min.css">
+
+<style>
+html, body{
+  height: 100%;
+  margin : 0;
+  padding: 0;
+}
+
+.mainimg{
+  text-align: center;
+  margin-left: auto;
+  margin-right:auto;
+  margin-top:150px;
+}
+.social{
+  text-align : center;
+  padding-bottom: 10px;
+  font-size: 24px;
+  margin-top:150px;
+  text-decoration: none;
+  display: flex;
+}
+.footer .ul{
+  text-decoration: none;
+   display: inline;
+}
+.footer-bottom{
+  font-size:15px;
+}
+.fb-right{
+  font-size:10px;
+  color:black;
+}
+
+
+.title-area{
+  caption-side: top;
+  text-align: left;
+}
+
+.table{
+  width: 100%;
+}
+#wrap{
+  margin:0 auto;
+  overflow: hidden;
+  padding-top: 10px;
+}
+div>article{
+  float : left;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+div>article>img{display: block; margin: 31px; margin-top: 0;}
+th, td{
+	padding: 10px 10px; 
+	img: center;
+}
+
+.bi-top-nav02 li a {
+    list-style:none;
+
+   width: 70px;
+   height: 30px;
+   font-size: 15px;
+   padding-top: 20px;
+   padding-bottom:4px;
+
+   display: inline-block;
+   transition: background-color .4s ease;
+   padding-left: auto;
+   padding-right: auto;
+   text-decoration: none;
+  }
+
+.bi-top-nav02 > li{
+	position:relative; 
+	float:left; 
+	margin-right:5px;
+}
+.bi-top-nav02{
+    list-style:none;
+    font-size: 12px;
+    line-height: 12px;
+    display:inline;
+    padding:5px;
+}
+.container-fluid h5{
+	margin:0;
+	padding:10px 0 0px 0px;
+}
+.list > ul > li > .product-name {
+	text-align: left;
+	margin-top: 0px;
+	list-style: none;
+	font-size: 10px;
+}
+.list > ul > li > .product-price {
+    text-align: left;
+    font-size: 10px;
+    margin-bottom: 10px;
+}
+.list > ul > li > .product-price::after {
+    content: "원";
+    font-size: 10px;
+    font-weight:normal;
+}
+.img-box{
+	width: 280px; height:390px;
+	padding: 10px 0;
+	margin-right:55px;
+	margin-bottom: 20px;
+	list-style: none;
+}
+ul {
+	list-style: none;
+}
+</style>
+</head>
+<body>
+
+<!--navigation-->
+<nav class="row justify-content-center text-center">
+	<div class="container-fluid">
+		<h5>bottom</h5>
+	</div>
+</nav>
+<!-- dropdown -->
+<nav class="row justify-content-center text-center">
+	<ul class="bi-top-nav02">
+		<li class="mymenu">
+			<a class="nav-link text-muted" href="#">skrit</a>
+		</li>
+		<li class="mymenu">
+			<a class="nav-link text-muted" href="#">pants</a>
+		</li>
+	</ul>
+</nav>
+
+<!-- bottom-->
+<div class="grid-image">
+<table>
+</table>
+</div>
+
+<hr/>
+<!-- 옷 리스트 -->
+<div id="wrap">
+	<div style="margin-left: 40px;"></div><br/>
+	<div class="list con">
+    	<ul class="row">
+        	<li class="cell">
+				<div>
+					<a href="#">
+						<img class="img-box" src="new1.gif" alt=""/>
+					</a>
+				</div>
+				<div class="product-name">패리슬 미니 데님스커트</div>
+				<div class="product-price">4300</div>
+			</li>
+			<li class="cell">
+				<div >
+					<a href="#"><img class="img-box" src="new4.jpeg" alt=""/></a>
+				</div>
+				<div class="product-name">투얀 포켓 플리츠 미니스커트</div>
+				<div class="product-price">67000</div>
+			</li>
+			<li class="cell">
+				<div>
+					<a href="#"><img class="img-box" src="new3.jpeg" alt=""/></a>
+				</div>
+				<div class="product-name">에센트 미니 스커트 (린넨 30%)</div>
+				<div class="product-price">42000</div>
+			</li>
+			<li class="cell">
+				<div><a href="#"><img class="img-box" src="new3.jpeg" alt=""></a></div>
+				<div class="product-name">밀린 로우웨이스트 데님팬츠</div>
+				<div class="product-price">19800</div>
+			</li>
+			<li class="cell">
+				<div><a href="#"><img class="img-box" src="new4.jpeg" alt=""></a></div>
+				<div class="product-name">헨그 카고 스트링 롱스커트</div>
+				<div class="product-price">22000</div>
+			</li>
+			<li class="cell">
+				<div><a href="#"><img class="img-box" src="new3.jpeg" alt=""></a></div>
+				<div class="product-name">(UNISEX) 캐픈 셔링 스트링팬츠</div>
+				<div class="product-price">19800</div>
+			</li>
+			<li class="cell">
+				<div><a href="#"><img class="img-box" src="new3.jpeg" alt=""></a></div>
+				<div class="product-name">래클 로우웨이스트 숏 데님팬츠</div>
+				<div class="product-price">56000</div>
+			</li>
+			<li class="cell">
+				<div><a href="#"><img class="img-box" src="new3.jpeg" alt=""></a></div>
+				<div class="product-name">로펌느 밴딩 바이커팬츠</div>
+				<div class="product-price">24300</div>
+			</li>
+			<li class="cell">
+				<div><a href="#"><img class="img-box" src="new3.jpeg" alt=""></a></div>
+				<div class="product-name">단가라 스커트</div>
+				<div class="product-price">54800</div>
+			</li>
+			<li class="cell">
+				<div><a href="#"><img class="img-box" src="new3.jpeg" alt=""></a></div>	
+				<div class="product-name">롬힛 스트링 와이드 코튼팬츠</div>
+				<div class="product-price">30000</div>
+			</li>
+			<li class="cell">
+				<div><a href="#"><img class="img-box" src="new4.jpeg" alt=""></a></div>
+				<div class="product-name">(UNISEX) 듀벤 카고 버뮤다 밴딩팬츠</div>
+				<div class="product-price">28000</div>
+			</li>
+			<li class="cell">
+				<div><a href="#"><img class="img-box" src="new5.jpeg" alt=""></a></div>
+				<div class="product-name">[12만장판매] 러트 세미 부츠컷 슬랙스</div>
+				<div class="product-price">19800</div>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<br/><br/>
+</body>
+</html>

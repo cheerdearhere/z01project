@@ -1,0 +1,21 @@
+@charset "EUC-KR";
+
+.shopPart {
+	margin:0;
+	padding:10px 0 0px 0px;
+}
+.product-title {
+    font-size: 0.8em;
+    font-weight:normal;
+    text-align: left;
+    margin-bottom: 0.5em;
+}
+.product-price {
+    font-size: 0.8em;
+    font-weight:normal;
+    text-align: left;
+}
+.card{
+	margin-bottom:1.4em;
+	border: none;
+}

@@ -1,0 +1,225 @@
+@charset "UTF-8";
+*{
+	box-sizing: border-box;
+	font-family:Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+
+}
+.single-product {
+	display: inline-block;
+	margin: auto;
+	max-width: 1000px;
+	padding-left: 25px;
+	padding-right: 20px;
+	}
+
+.row {
+	display:inline-block;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.single-product {
+	margin-top: 20px;
+}
+
+.col-6 img{
+	max-width: 100%;
+	margin-right: 50px;
+}
+
+.single-product .col-6 img{
+	padding: 0;
+}
+
+.single-product .col-6 {
+	padding: 20px;
+	float: left;
+	}
+
+.col-6 {
+	flex-basis: 50%;
+	min-width: 300px;
+}
+
+.col-6 h6 {
+	margin-left: 20px 0;
+	margin-top: 20px;
+	font-size: 22px;
+	font-weight: bold;
+}
+
+.col-6 p {
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.single-product select {
+	display: flex;
+	padding: 2px;
+	margin-top: 20px;
+	width: 150px;
+	height: 30px;
+}
+
+.single-product input{
+	width: 50px;
+	height: 30px;
+	margin-top: 10px;
+	padding-left: 10px;
+	font-size: 20px;
+	margin-right: 10px;
+	border: 1px solid #000000;
+	float: left;
+}
+
+.single-product .btn1{
+	display: inline-block;
+	width: 400px;
+  background-color: white;
+	margin-top: 10px;
+  padding: 5px 5px;
+	border:0;
+  color: black;
+  cursor:pointer;
+  user-select: none;
+  font-weight: 500;
+	height: 40px;
+	border-width: medium;
+	border-style: solid;
+	border-color: black;
+}
+
+.single-product .btn2{
+	display: inline-block;
+	width: 400px;
+  background-color: black;
+	margin-top: 10px;
+  padding: 5px 5px;
+	border:0;
+  color: white;
+  cursor:pointer;
+  user-select: none;
+  font-weight: 500;
+	height: 40px;
+}
+input:focus{
+	outline: none;
+}
+
+.small-img-row {
+	display: flex;
+	justify-content: space-around;
+}
+
+.small-img-col {
+	flex-basis: 24%;
+	cursor: pointer;
+	margin-top: 10px;
+}
+
+.nav-details {
+  list-style: none;
+  color: #000000;
+  padding-left:100px;
+  padding-right:100px;
+  float: left;
+  line-height: 30px;
+  vertical-align: middle;
+  text-align: center;
+	justify-content: center;
+}
+
+.product-info-row {
+	justify-content: center;
+}
+.product-info-col {
+	vertical-align: middle;
+	justify-content: space-between;
+	width: 100%;
+	margin-left:100px;
+	margin-right: 100px;
+	display: inline-block;
+}
+/*리뷰 등 중앙탭*/
+.tab_content {
+  text-align:center;
+  font-size:0;
+  max-width:800px;
+  margin:100px auto;
+  padding: 0 0 0 0;
+  justify-content: center;
+  display: inline-block;
+}
+input[type="radio"] {
+  display:none;
+}
+input[type="radio"] + label { /* 버튼 공통 속성 */
+  display:inline-block;
+  text-align: center;
+  width: 200px;
+  height: 45px;
+  padding: 10px 10px;
+  background:white;
+  color:black;
+  font-size:14px;
+  cursor:pointer;
+  border-width: inherit;
+  border-style: solid;
+  border-color: black;
+  }
+input[type="radio"]:checked + label { /* 선택된 버튼속성 */
+  background:black;
+  color:white;
+  }
+.conbox {/* 컨텐츠박스 공통 속성 */
+  height:600px;
+  width:80%;
+  background:none;
+  margin:0 20px;
+  margin-bottom: 50px;
+  padding-bottom: 50px;
+  display:none;
+  text-align:center;
+  font-size:12px;
+  padding:20px;
+  box-sizing:border-box;
+  }
+input[id="tab01"]:checked ~ .con1 {/* 인풋에 체크가 해당 요소보이게 설정 */
+  display:block;
+  }
+input[id="tab02"]:checked ~ .con2 {
+  display:block;
+  border-width: thin;
+  border-style: solid;
+  border-color: #999;
+}
+input[id="tab03"]:checked ~ .con3 {
+  display:block;
+  border-width: thin;
+  border-style: solid;
+  border-color: #999;
+}
+input[id="tab04"]:checked ~ .con4 {
+  display:block;
+}
+
+/*최상단 이동 버튼*/
+.moveTopBtn {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  width: 3rem;
+  height: 3rem;
+  background: black;
+  cursor:pointer;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  padding-top: 7px;
+  border-radius: 50%;
+  font-size: 15px;
+}
+/*CK Editor ck-widget__resizer__handle d-none*/
+.ck-widget__resizer__handle{
+	display:none;
+}

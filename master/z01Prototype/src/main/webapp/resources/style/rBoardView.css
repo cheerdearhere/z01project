@@ -1,0 +1,40 @@
+@charset "EUC-KR";
+
+* {
+  margin:0;
+  padding:0;
+}
+
+body {
+	margin-left : 30px;
+	margin-right : 100px;
+	padding : 10px;
+	height : 100%;
+}
+
+.form-inline .btn {
+	border-radius:0%; 
+	border-color:black; 
+	background-color:black;
+}
+
+.form-inline .input {
+	 border-radius:0%;
+}
+
+#rBoard .h3 {
+	margin-bottom: 40px;
+	padding-bottom: 30px;
+	justify-content:center;
+}
+
+#th{
+	background-color:black;
+	color:white;
+	height: 20px;
+}
+
+ .write .btn{
+ color: black;
+	
+}

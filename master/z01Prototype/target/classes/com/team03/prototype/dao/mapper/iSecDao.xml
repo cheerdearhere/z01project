@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- root element는 mapper -->
+<!--속성 namespace는 IDao interface의 경로 -->
+<mapper namespace="com.team03.prototype.dao.ISecDao">
+	<insert id="join" parameterType="com.team03.prototype.dto.PTJoinDto">
+		INSERT INTO USER_ALL(UEMAIL,UNAME,UADDRESS,UPHONE1,UPHONE2,UPW) 
+		VALUES(#{uemail},#{uname},#{uaddress},#{uphone1},#{uphone2},#{upw})
+	</insert>
+	<select id="login" resultType="com.team03.prototype.dto.PTJoinDto">
+		SELECT * FROM USER_ALL WHERE UEMAIL = #{uemail}
+	</select>
+	<select id="identifyUser" parameterType="String" resultType="com.team03.prototype.dto.PTJoinDto">
+		SELECT * FROM USER_ALL WHERE UEMAIL = #{uEmail}
+	</select>
+	<update id="userInfoSave" parameterType="com.team03.prototype.dto.PTJoinDto">
+		UPDATE USER_ALL SET UNAME=#{uname},UADDRESS=#{uaddress},UPHONE1=#{uphone1},UPHONE2=#{uphone2} WHERE UEMAIL=#{uemail}
+	</update>
+	<select id="userInforView" parameterType="String" resultType="com.team03.prototype.dto.PTJoinDto">
+		SELECT * FROM USER_ALL WHERE UEMAIL = #{uEmail}
+	</select>	
+<!-- authDB(social login) -->
+	<select id="authDB" parameterType="String" resultType="com.team03.prototype.dto.AuthUserDto">
+		SELECT * FROM AUTHUSER WHERE AUTHUSERNAME = #{authUsername}
+	</select>
+	<insert id="authInsert" parameterType="com.team03.prototype.dto.AuthUserDto">
+		INSERT INTO AUTHUSER (AUTHUSERNAME,AUTHPW) VALUES(#{authUsername},#{authPw})
+	</insert>
+	<select id="authLogin" parameterType="String" resultType="com.team03.prototype.dto.AuthUserDto">
+		SELECT * FROM AUTHUSER WHERE AUTHUSERNAME = #{username}
+	</select>
+</mapper>

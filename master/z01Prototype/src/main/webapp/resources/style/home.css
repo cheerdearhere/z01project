@@ -1,0 +1,26 @@
+@charset "EUC-KR";
+.swimimg{
+  text-align: center;
+  margin-left: auto;
+  margin-right:auto;
+  margin-top:150px;
+}
+.container {
+    padding: auto;
+    margin: auto;
+	z-index:9999;
+}
+.grid-image{
+  text-align: center;
+  margin-left: 60px;
+  margin-right: auto;
+  margin-top:150px;
+}
+.table{
+  width: 100%;
+}
+#wrap{
+  margin:0 auto;
+  overflow: hidden;
+  padding-top: 10px;
+}

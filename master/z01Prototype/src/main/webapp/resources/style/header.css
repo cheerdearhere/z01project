@@ -1,0 +1,11 @@
+@charset "EUC-KR";
+.navbar {
+	border-radius:0px;
+	margin-bottom:0px;
+}
+.tBar{
+	width: 100%;
+}
+.mymenu a, .menu01, .menu02{
+	font-size: 1rem;
+}
