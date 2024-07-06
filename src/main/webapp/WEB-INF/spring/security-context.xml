@@ -44,7 +44,7 @@
 		<intercept-url pattern="/nredirect" access="isAnonymous()"/>
 		<intercept-url pattern="/kredirect" access="isAnonymous()"/>
 		<!-- hasAnyRole() -->
-		<intercept-url pattern="/**" access="hasAnyRole('ROLE_USER','ROLE_ADMIN', 'ROLE_MANAGE', 'ROLE_TEMPORARY_USER')" requires-channel="https"/>
+		<intercept-url pattern="/" access="hasAnyRole('ROLE_USER','ROLE_ADMIN', 'ROLE_MANAGE', 'ROLE_TEMPORARY_USER')" requires-channel="https"/>
 		
 		<form-login
 			login-processing-url="/login"

@@ -183,7 +183,7 @@ public class PrototypeController {
 	private void socialUrl(Model model, HttpSession session) {
 		//kakao
 		String kakao_url = "https://kauth.kakao.com/oauth/authorize"
-				+ "?client_id=d3a73e8cf18d3129ba8b61b086e8db48"
+				+ "?client_id=YOUR_CLIENT_ID"
 				+ "&redirect_uri=https://localhost:8443/prototype/kredirect"
 				+ "&response_type=code";
 		model.addAttribute("kakao_url",kakao_url);
@@ -282,7 +282,7 @@ public class PrototypeController {
 				BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
 				StringBuilder sb = new StringBuilder();
 				sb.append("grant_type=authorization_code");
-				sb.append("&client_id=d3a73e8cf18d3129ba8b61b086e8db48");
+				sb.append("&client_id=YOUR_CLIENT_ID");
 				sb.append("&redirect_uri=https://localhost:8443/prototype/kredirect");
 				sb.append("&code=" + authorize_code);
 				bw.write(sb.toString());
