@@ -1,5 +1,6 @@
 
-# I. [$.ajax](https://api.jquery.com/jquery.ajax/)
+# I. 시작하며
+- [ajax 공식](https://api.jquery.com/jquery.ajax/)
 - ajax() method는 get과 post를 지정할 수 있는 method로 많이 사용된다. 
 - 비동기적으로 request를 처리하며 one page 방식을 사용할때 유용하다.
 ```javascript
@@ -9,10 +10,9 @@
         ... 
     });
 ```
-
 - 파라메터는 객체형으로 표시하며 여러 속성들을 사용
-## A. 속성
-### 1. 속성 소개
+
+# II. 속성 정보
 - `asnyc`: request의 동기/비동기를 정한다. default는 true이며 asynchronous
 - `beforeSend`(xhr): request가 전송되기 전에 수행할 함수.
   - `return false;` 또는 `jqXHR.abort();`인 경우 진행 정지
@@ -78,8 +78,10 @@
   - `form.href`, `a.href` 등의 요청 url
 - `username`:
 - `xhr`:
-### 2. [사용 예시](https://shanepark.tistory.com/220)
-#### a. POST/ Object
+# III. 사용 예시
+- [참고 게시물](https://shanepark.tistory.com/220)
+## A. client >> Spring
+### 1. POST/ Object
 ```javascript
 $.ajax({
     url: '/ajax/sample.do',
@@ -95,7 +97,7 @@ $.ajax({
     }
 });
 ```
-#### b. GET/ Object
+### 2. GET/ Object
 ```javascript
 const obj = {};
 obj['name'] = 'obj_value1';
@@ -115,7 +117,7 @@ $.ajax({
     }
 });
 ```
-#### c. GET/ Map or Array
+### 3. GET/ Map or Array
 ```javascript
 const map = new Map();
 map.set('name', 'map_value1');
@@ -137,7 +139,6 @@ map.forEach((value, key)=>{
     i++;
 })
 
-
 $.ajax({
     url: '/ajax/sample1.ajax',
     method: 'get',
@@ -149,7 +150,7 @@ $.ajax({
     }
 });
 ```
-#### d. POST/ form element
+### 4. POST/ form element
 - form 자체에서 처리
 ```html
 <!-- 
@@ -164,7 +165,7 @@ $.ajax({
         onsubmit="doSubmit(this);return false;"
 >
     <!-- form controls -->
-	<label for="name"> 이름 : </label>
+    <label for="name"> 이름 : </label>
     <input type="text" id="name" name="name">
     <label for="age"> 나이 : </label>
     <input type="text" id="age" name="age">
@@ -189,6 +190,7 @@ function onClickSubmitBtn(){
     $("#targetFormId").attr("action","/ajax/sample-url.do");
     $("#targetFormId").submit();
 }
+// or
 function doSubmit(form){
     $.ajax({
         url: '/ajax/sample7.ajax',
@@ -202,7 +204,7 @@ function doSubmit(form){
     });
 }
 ```
-#### e. GET/ JSON.stringify
+### 5. GET/ JSON.stringify
 ```javascript
 const nameList = ['A', 'B', 'C']; //배열 데이터
 
@@ -230,15 +232,15 @@ $.ajax({
     dataType : 'text',
     traditional : true,
     data : {
-    		nameList : nameList
-            , userList : JSON.stringify(userList)
+        nameList : nameList
+        , userList : JSON.stringify(userList)
     },
     success: function (data, status, xhr) {
         console.log(data);
     }
 });
 ```
-#### f. 기본 입력 차단하고 처리 후 진행(preventDefault)
+### 6. 기본 입력 차단하고 처리 후 진행(preventDefault)
 - 버튼/ anchor element/ submit 등의 기본 기능을 막는 함수: `event.preventDefault();`
 ```html
 <script>
@@ -272,8 +274,8 @@ $(document).ready(function(){
 </script>
 ```
 
-### 3. Spring에서 받기
-#### a. 기본
+## B. Spring에서 받기
+### 1. 기본
 ```java
 @RequestMapping(value="/data", produces="application/text; charset=UTF8")
 //body가 아닌 jsp파일로 반환할때는 @ResponseBody 없음
@@ -281,7 +283,7 @@ public String data(HttpServletRequest request, HttpServletResponse response, Mod
     return "data";//ajax를 통해 jsp파일을 로드하면 그 페이지의 내용(html)을 가져옴
 }
 ```
-#### b. GET: 각각 필드 받기
+### 2. GET: 각각 필드 받기
 ```java
 @RequestMapping(value = "/ajax/sample.do", method = RequestMethod.GET)
 @ResponseBody
@@ -298,7 +300,7 @@ public String sample1(HttpServletRequest request, ModelMap model){
     return "\"result\":\"ok\"";
 }
 ```
-#### c. GET: Object/Map/Array 등 데이터 세트로 받기
+### 3. GET: Object/Map/Array 등 데이터 세트로 받기
 ```java
 @RequestMapping(value = "/ajax/sample3.do", method = RequestMethod.GET)
 @ResponseBody
@@ -315,12 +317,11 @@ public String sample3(@RequestParam Map<String, String> param, HttpServletReques
     return "\"result\":\"ok\"";//RequestBody인 경우 escape 처리
 }
 ```
-#### d. GET: 입력 필드들의 이름과 같은 VO/DTO를 미리 만들어서 한번에 받는 경우
+### 4. GET: 입력 필드들의 이름과 같은 VO/DTO를 미리 만들어서 한번에 받는 경우
 ```java
 @RequestMapping(value = "/ajax/sample4.do", method = RequestMethod.GET)
 @ResponseBody
 public String sample4(@ModelAttribute User user, HttpServletRequest request, ModelMap model){
-
     String name = user.getName();
     String age = user.getAge();
     String sex = user.getSex();
@@ -331,7 +332,7 @@ public String sample4(@ModelAttribute User user, HttpServletRequest request, Mod
     return "\"result\":\"ok\"";
 }
 ```
-#### e. POST: Array/Map
+### 5. POST: Array/Map
 ```java
 @RequestMapping(value = "/ajax/sample6.ajax", method = RequestMethod.POST)
 @ResponseBody
@@ -352,8 +353,8 @@ public String sample6(
 
     return "\"result\":\"ok\"";
 ```
-### 4. Spring >> Html
-#### a. xml
+## C. Spring >> Html
+### 1. xml
 - server
 ```java
 @RequestMapping(value = "/datatype/sample1.ajax", method = RequestMethod.GET)
@@ -365,7 +366,6 @@ public String sample1(HttpServletRequest request, ModelMap model){
 
     return xmlOut.outputString(document);
 }
-
 
 public Document getOrderListXml(){
     List<Order> orderList = getOrderList();
@@ -415,7 +415,7 @@ $.ajax({
     }
 });
 ```
-#### b. json
+### 2. json
 - JSON 관련 라이브러리를 쓸 수 없는 경우
   - java(jdk 1.7이하)
     - [JsonParser](../src/main/java/com/team03/prototype/util/jsonLibrary/JsonParser.java)
@@ -460,7 +460,7 @@ $.ajax({
     }
 });
 ```
-#### c. html
+### 3. html
 - server
 ```java
 @RequestMapping(value = "/datatype/sample3.ajax", method = RequestMethod.GET)
@@ -488,7 +488,7 @@ $.ajax({
     }
 });
 ```
-#### d. script
+### 4. script
 - client
 ```javascript
 var url = "https://code.jquery.com/color/jquery.color-2.1.2.js";
@@ -509,7 +509,7 @@ $.getScript( url, function() {
   });
 });
 ```
-#### e. text
+### 5. text
 - server
 ```java
 @RequestMapping(value = "/datatype/sample6.ajax", method = RequestMethod.GET)
@@ -537,4 +537,128 @@ $.ajax({
 
     }
 });
+```
+# IV. 파일 업로드 처리하기
+## A. 설정
+- 파일 입출력 관련 기본 dependency
+```xml
+<dependency>
+    <groupId>commons-fileupload</groupId>
+    <artifactId>commons-fileupload</artifactId>
+    <version>1.3.2</version>
+</dependency> 
+<dependency>
+    <groupId>commons-io</groupId>
+    <artifactId>commons-io</artifactId>
+    <version>2.5</version>
+</dependency> 
+```
+- servlet, jsp update
+```xml
+<dependency>
+     <groupId>javax.servlet</groupId>
+     <artifactId>javax.servlet-api</artifactId>
+     <version>3.0.1</version>
+     <scope>provided</scope>
+</dependency>
+<dependency>
+      <groupId>javax.servlet.jsp</groupId>
+      <artifactId>jsp-api</artifactId>
+      <version>2.2</version>
+</dependency>
+```
+- bean에 multipart 관련
+```xml
+<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">        
+    <!-- max upload size in bytes -->        
+    <beans:property name="maxUploadSize" value="5242880" /> 
+    <!-- 5MB -->        
+    <!-- max size of file in memory (in bytes) -->        
+    <beans:property name="maxInMemorySize" value="1048576" /> <!-- 1MB -->    
+</beans:bean> 
+```
+- Form 관련 설정
+  - https://ko.javascript.info/formdata
+  - https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference
+## B. 처리
+### 1. controller 	
+```java
+@RequestMapping(value = "/", method = RequestMethod.GET)
+//…
+return "uploadAjax";
+```
+
+### 2. AjaxFile.class: DTO class
+```java
+import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
+
+public class AjaxFile {
+  private List<MultipartFile> images;
+  private String writer;
+  //…generate…
+}
+```
+
+### 3. upload.jsp 생성
+```html
+<h3>Ajax upload</h3>
+<form action="file" method="post" enctype="multipart/form-data" id="frm">
+	올린 사람: <input type="text" name="writer" id="writer"/><br/>
+	파일 <input type="file" id="images" name="images" multiple/>
+</form>
+<br/>
+<button id="btn1" class="btn btn-primary">file upload</button>
+<h3 id="result">올린 파일 확인하기</h3>
+```
+
+### 4. script
+```javascript
+$(document).ready(function(){
+    $("#btn1").on("click", function(){
+        //form에서 전달된 data를 ajax로 전송할 객체
+        //배열이므로 [0]로 표시
+        let form = new FormData($("#frm")[0]);
+        $.ajax({
+            url: "file",//form에 표시안해도 ajax에서 입력해서 처리가능
+            type: "post",
+            data: form,
+            //FormData 객체를 사용할때 contentType과 processType을 false로 지정
+            contentType: false,//application/타입; charset=UTF8
+            processData: false,//default(true)는 보내는 데이터를 quert String으로 바꿔서 보냄
+            success: function(data){//list로 data에 받아 사용
+                for(var i=0;i<data.length ; i++){
+                    $("#result").append(data[i] + "<br/>");
+                }
+            },
+            error: function(){
+                alert("file err");
+            }
+        });
+    });
+});
+```
+
+### 5. controller
+```java
+@RequestMapping("/file")
+@ResponseBody
+public Object file(AjaxFile file) {
+    List<MultipartFile> list = file.getImages();
+    ArrayList<String> fileNameList = new ArrayList<String>();
+
+    //ResposeBody로 ArrayList 반환
+    try {
+        for(MultipartFile mf : list) {
+            fileNameList.add(mf.getOriginalFilename());
+            mf.transferTo(new File("/Users/choikmacbookair/Desktop/workspace/spAjaxUpload/src/main/webapp/resources/upimage/" + mf.getOriginalFilename()));
+        }
+    }
+    catch(Exception e) {
+        e.printStackTrace();
+    }
+    String writer = file.getWriter();
+    System.out.println("writer: " + writer);
+    return fileNameList;
+}
 ```
