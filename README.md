@@ -32,6 +32,6 @@
     - CK Editor
     - html table
     - PDF viewer… 
-# [화면 설명](/site_view.md)
+# [화면 설명](site_view.md)
 
 
