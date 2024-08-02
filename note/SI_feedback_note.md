@@ -139,4 +139,3 @@ int pageTotCnt = this.cprtMemberService.authrtMngListCnt(cprtAuthVO);
 int startRow = pageTotCnt - (pagingVO.getPageIndex() * pagingVO.getRecordCountPerPage()) +1;
 int endRow = pageTotCnt - (pagingVO.getRecordCountPerPage() * (pagingVO.getPageIndex() - 1));
 ```
-# IV. Database
