@@ -77,16 +77,16 @@ SELECT
         ELSE ''
     END AS EMAIL_ARGE_YN
 ```
-## G. WITH UR: UNCOMMITED READ
+## H. WITH UR: UNCOMMITED READ
 - 트랜잭션 처리된 경우 커밋을 기다리지 않은(ROLLBACK 여지가 있는) 데이터를 포함해 사용
 - COMMIT되지 않아 롤백 여지가 있고 dirty data가 읽혀질 수 있어 insert/update/delete 처링에서 정확한 정보입력이 중요한 경우 절대금지
 - 조회성 프로그램인 경우에는 사용하면 좋음
   - `WITH UR FOR READ ONLY`
 - 오라클의 경우 UNCOMMITED DATA를 RBS라는 곳에 따로 보관하므로 데이터 변경과 무관하게 작업 가능
-## F. FETCH: 조회 결과중 일부만 지정해서 처리
+## I. FETCH: 조회 결과중 일부만 지정해서 처리
   - [OFFSET ROWS] `FETCH` [`FIRST` | `NEXT`] [row_count | percent] `ROWS` [`ONLY` | `WITH TIES`]
   - 첫 줄만 얻는 경우: (SELECT 쿼리) `FETCH FIRST 1 ROW ONLY`
-## G. 직접 VIEW 만들어서 JOIN
+## J. 직접 VIEW 만들어서 JOIN
 ```SQL
 LEFT OUTER JOIN (
     SELECT
@@ -98,7 +98,7 @@ LEFT OUTER JOIN (
 ) TABLE1_C
 ON TABLE1_C.PURCH_CO_CD = A.PURCH_CO_CD
 ```
-## H. DECODE
+## K. DECODE
 - 대상컬럼을 조건에 따라 변경
 - 단순 값 차이에 의한 변경일때 유용
 - 너무 많은 경우 가독성이 떨어질 수 있음
@@ -106,8 +106,8 @@ ON TABLE1_C.PURCH_CO_CD = A.PURCH_CO_CD
 ```ORACLE
 DECODE(CONDITION_COLUMN, '조건1','결과1','조건2','결과2', .., 'DEFAULT_VALUE') AS RETURN_COLUMN
 ```
-## I. IN(...)에도 SELECT 문 가능
-## J. WITH ... AS ()로 임시테이블을 만들면 더 가독성을 높일 수 있다.
+## L. IN(...)에도 SELECT 문 가능
+## M. WITH ... AS ()로 임시테이블을 만들면 더 가독성을 높일 수 있다.
 ```db2
 WITH TMP1 AS (
     SELECT
@@ -126,6 +126,44 @@ WITH TMP1 AS (
 )
 SELECT * FROM TMP1, TMP2
 ```
+## N. 컬럼마다 데이터 수 세기: GROUPING
+```SQL
+SELECT
+    GROUPING(TARGET_COLUMN1) AS COLUMN1
+    , GROUPING(TARGET_COLUMN2) AS COLUMN2
+FROM
+    TABLE1
+WHERE
+    USE_YN = 'Y'
+GROUP BY ROLLUP(TARGET_COLUMN1, TARGET_COLUMN2)
+    HAVING TARGET_COLUMN1 > 10
+```
+## O. 테스트 데이터 만들어서 사용하기
+- 데이터가 없는 경우 임시 데이터를 넣은 데이터를 사용.
+- 실제에서는 제외
+```sql
+SELECT
+    '' AS BUSI_DIV_CD
+    , '' AS CD_VALD_VAL
+    , '' AS CD_CLS_HNGL_NM
+    , '' AS CD_CLS_ENG_NM
+    , '' AS CD_CLS_VAL1
+    , '' AS CD_CLS_VAL2
+FROM
+    SYSIBM.SYSDUMMY1
+```
+## P. VALUE, NVL, COALESCE
+- 상황에 따라 사용
+- VALUE('값1', '값2', '값3'...): NULL이 아닌 값이 나올때까지 순차적으로 체크하고 유효값이 나오면 반환
+- NVL('체크할 값','null일때 사용할 default')
+- COALESCE('값1', '값2', '값3', ...): NULL이 아닌 값이 나올때까지 순차적으로 체크하고 유효값이 나오면 반환. VALUE()와 같지만 좀더 명확한 기능을 알수있어 좋음.
+## Q. 연산자활용 잘하기
+- 사칙연산
+- ||, &&
+- FLOOR, CEIL ...
+- LENGTH ...
+## R. 날짜 관련
+
 
 # II. 회사별로 다름
 ## A. 기본 DB2에는 없으나 내부에서 함수나 프로시저를 만들어놓는 경우가 있음
