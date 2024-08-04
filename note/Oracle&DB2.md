@@ -1,113 +1,113 @@
-# I. ÀÏ¹ÝÀû
-## A. »ç¿ëÇÏ´Â ÄÃ·³ Á÷Á¢ ÀÔ·ÂÇÏ±â
-- *Àº ¸¶Áö¸·¿¡´Â ½ÇÁ¦ »ç¿ëÇÏ´Â ÄÃ·³ Ç¥½Ã
+# I. ì¼ë°˜ì 
+## A. ì‚¬ìš©í•˜ëŠ” ì»¬ëŸ¼ ì§ì ‘ ìž…ë ¥í•˜ê¸°
+- *ì€ ë§ˆì§€ë§‰ì—ëŠ” ì‹¤ì œ ì‚¬ìš©í•˜ëŠ” ì»¬ëŸ¼ í‘œì‹œ
 ```db2
-/*¿¬½À¿¡¼­¸¸*/
+/*ì—°ìŠµì—ì„œë§Œ*/
 SELECT * FROM TABLE1;
 
-/*±ÇÀå*/
-SELECT 
+/*ê¶Œìž¥*/
+SELECT
     COLUMN1
     , COLUMN2
     , COLUMN3
-FROM 
+FROM
     TABLE1;
 ```
-## B. Mybatis/ibatis µî preparedStatement mapping xml½Ã ÁÖ¼® »ç¿ë ÁÖÀÇ
-- preparedStatement¿¡¼­ ¸ÅÇÎÀ¸·Î »ç¿ëÇÏ´Â °ªµé¿¡ ´ëÇØ ÁÖÀÇ.
-- ÁÖ¼®Ã³¸®µÇ¾î ÀÖ´õ¶óµµ ÁÖÀÇ
-  - `?`: ¸ÅÇÎ À§Ä¡ Ç¥±â¿ëÀ¸·Î »ç¿ëµÊ
-  - `${field}`: ibatis Á÷Á¢ ÇÊµå ÀÔ·Â½Ã »ç¿ë
-  - `#{field}`: mybatis ÇÊµå ÀÔ·Â½Ã »ç¿ë
-## C. Á¤·Ä ±âÁØÀÎ ÄÃ·³ÀÇ µ¥ÀÌÅÍ ²À È®ÀÎ
-- varchar Á¤·Ä: 1, 11, 111, 2, 21, 3, 4, ...
-- int(numeric/decimal) Á¤·Ä: 1, 2, 3, 4, 11, 21, 111
+## B. Mybatis/ibatis ë“± preparedStatement mapping xmlì‹œ ì£¼ì„ ì‚¬ìš© ì£¼ì˜
+- preparedStatementì—ì„œ ë§¤í•‘ìœ¼ë¡œ ì‚¬ìš©í•˜ëŠ” ê°’ë“¤ì— ëŒ€í•´ ì£¼ì˜.
+- ì£¼ì„ì²˜ë¦¬ë˜ì–´ ìžˆë”ë¼ë„ ì£¼ì˜
+  - `?`: ë§¤í•‘ ìœ„ì¹˜ í‘œê¸°ìš©ìœ¼ë¡œ ì‚¬ìš©ë¨
+  - `${field}`: ibatis ì§ì ‘ í•„ë“œ ìž…ë ¥ì‹œ ì‚¬ìš©
+  - `#{field}`: mybatis í•„ë“œ ìž…ë ¥ì‹œ ì‚¬ìš©
+## C. ì •ë ¬ ê¸°ì¤€ì¸ ì»¬ëŸ¼ì˜ ë°ì´í„° ê¼­ í™•ì¸
+- varchar ì •ë ¬: 1, 11, 111, 2, 21, 3, 4, ...
+- int(numeric/decimal) ì •ë ¬: 1, 2, 3, 4, 11, 21, 111
 ```db2
-SELECT 
-    CD_VALD_VAL 
+SELECT
+    CD_VALD_VAL
     , CD_CLS_VAL1
     , CD_CLS_VAL2
     --...
-FROM 
+FROM
     TABLE1
 ORDER BY CAST(CD_VALD_VAL AS INT)
 ```
 ## D. LISTAGG
-- ¾î¶² ÄÃ·³ÀÇ °ªÀ» ÇÕÃÄ¼­ ÇÏ³ªÀÇ ¹®ÀÚ¿­ ¿¬°á·Î ¹ÝÈ¯
+- ì–´ë–¤ ì»¬ëŸ¼ì˜ ê°’ì„ í•©ì³ì„œ í•˜ë‚˜ì˜ ë¬¸ìžì—´ ì—°ê²°ë¡œ ë°˜í™˜
 ```db2
 SELECT LISTAGG(CD_CLS_VAL4, ',') WITHIN GROUP (ORDER BY CAST(CD_VALD_VAL AS INT))
 FROM TABLE1
-WHERE 
+WHERE
     MNGE_CD = 'TARGET_TYP_CD'
     AND USE_YN = 'Y'
 ```
-- °°Àº Å×ÀÌºí¿¡¼­ Á¶È¸ÇÒ °æ¿ì ÇÑ¹ø¿¡ °°Àº Á¶°ÇÀ¸·Î Á¶È¸ÇÏ´Â °ÍÀÌ ÀÏÁ¤ÇÑ °ªÀ» Ç¥Ãâ
-  - °ªÀÌ ¾ø¾îµµ Ç¥½Ã
+- ê°™ì€ í…Œì´ë¸”ì—ì„œ ì¡°íšŒí•  ê²½ìš° í•œë²ˆì— ê°™ì€ ì¡°ê±´ìœ¼ë¡œ ì¡°íšŒí•˜ëŠ” ê²ƒì´ ì¼ì •í•œ ê°’ì„ í‘œì¶œ
+  - ê°’ì´ ì—†ì–´ë„ í‘œì‹œ
 ```db2
 SELECT
-    CD_CLS_NM /*°ªÀÇ ±âÁØ*/
+    CD_CLS_NM /*ê°’ì˜ ê¸°ì¤€*/
     , LISTAGG(CD_CLS_VAL3, ',') WITHIN GROUP (ORDER BY CAST(CD_VALD_VAL AS INT)) AS DATA3
     , LISTAGG(CD_CLS_VAL4, ',') WITHIN GROUP (ORDER BY CAST(CD_VALD_VAL AS INT)) AS DATA4
     , LISTAGG(CD_CLS_VAL5, ',') WITHIN GROUP (ORDER BY CAST(CD_VALD_VAL AS INT)) AS DATA5
 FROM TABLE1
-WHERE 
+WHERE
     MNGE_CD = 'TARGET_TYP_CD'
     AND USE_YN = 'Y'
 GROUP BY CD_CLS_NM
 ```
-## E. AUTO INCREASE ¾ÈµÇ´Â °æ¿ì > Á÷Á¢ Ã¤¹ø
+## E. AUTO INCREASE ì•ˆë˜ëŠ” ê²½ìš° > ì§ì ‘ ì±„ë²ˆ
 ```db2
 SELECT
     NVL(MAX(CAST(CD_VALD_VAL AS INT)), 0) +1
 FROM TABLE1
     MNGE_CD = 'TARGET_TYP_CD'
 ```
-- UPDATE ¹®ÀÇ ÀÔ·Â°ªÀ¸·Î »ç¿ë
-## F. ROWNUMBER ¼ø¹ø ±âÁØ Á¤ÇÏ±â
+- UPDATE ë¬¸ì˜ ìž…ë ¥ê°’ìœ¼ë¡œ ì‚¬ìš©
+## F. ROWNUMBER ìˆœë²ˆ ê¸°ì¤€ ì •í•˜ê¸°
 ```db2
 SELECT
     ROWNUMBER() OVER(ORDER BY FIRST_REG_TSTMP DESC) RN
     , NVL(A.COLUMN1, '') AS COLUMN1
     --...
 ```
-## G. Á¶°Ç¿¡ µû¶ó °ª Ã³¸®ÇØ¼­ ÄÃ·³À¸·Î ¹ÝÈ¯ÇÏ±â
+## G. ì¡°ê±´ì— ë”°ë¼ ê°’ ì²˜ë¦¬í•´ì„œ ì»¬ëŸ¼ìœ¼ë¡œ ë°˜í™˜í•˜ê¸°
 ```db2
-    , CASE 
+    , CASE
         WHEN A.CLUS_NO IN (1, 22, 31) THEN VALUE(C.EMAIL_AGRE_YN,'1')
         ELSE ''
     END AS EMAIL_ARGE_YN
 ```
 ## G. WITH UR: UNCOMMITED READ
-- Æ®·£Àè¼Ç Ã³¸®µÈ °æ¿ì Ä¿¹ÔÀ» ±â´Ù¸®Áö ¾ÊÀº(ROLLBACK ¿©Áö°¡ ÀÖ´Â) µ¥ÀÌÅÍ¸¦ Æ÷ÇÔÇØ »ç¿ë
-- COMMITµÇÁö ¾Ê¾Æ ·Ñ¹é ¿©Áö°¡ ÀÖ°í dirty data°¡ ÀÐÇôÁú ¼ö ÀÖ¾î insert/update/delete Ã³¸µ¿¡¼­ Á¤È®ÇÑ Á¤º¸ÀÔ·ÂÀÌ Áß¿äÇÑ °æ¿ì Àý´ë±ÝÁö
-- Á¶È¸¼º ÇÁ·Î±×·¥ÀÎ °æ¿ì¿¡´Â »ç¿ëÇÏ¸é ÁÁÀ½
+- íŠ¸ëžœìž­ì…˜ ì²˜ë¦¬ëœ ê²½ìš° ì»¤ë°‹ì„ ê¸°ë‹¤ë¦¬ì§€ ì•Šì€(ROLLBACK ì—¬ì§€ê°€ ìžˆëŠ”) ë°ì´í„°ë¥¼ í¬í•¨í•´ ì‚¬ìš©
+- COMMITë˜ì§€ ì•Šì•„ ë¡¤ë°± ì—¬ì§€ê°€ ìžˆê³  dirty dataê°€ ì½í˜€ì§ˆ ìˆ˜ ìžˆì–´ insert/update/delete ì²˜ë§ì—ì„œ ì •í™•í•œ ì •ë³´ìž…ë ¥ì´ ì¤‘ìš”í•œ ê²½ìš° ì ˆëŒ€ê¸ˆì§€
+- ì¡°íšŒì„± í”„ë¡œê·¸ëž¨ì¸ ê²½ìš°ì—ëŠ” ì‚¬ìš©í•˜ë©´ ì¢‹ìŒ
   - `WITH UR FOR READ ONLY`
-- ¿À¶óÅ¬ÀÇ °æ¿ì UNCOMMITED DATA¸¦ RBS¶ó´Â °÷¿¡ µû·Î º¸°üÇÏ¹Ç·Î µ¥ÀÌÅÍ º¯°æ°ú ¹«°üÇÏ°Ô ÀÛ¾÷ °¡´É
-## F. FETCH: Á¶È¸ °á°úÁß ÀÏºÎ¸¸ ÁöÁ¤ÇØ¼­ Ã³¸®
+- ì˜¤ë¼í´ì˜ ê²½ìš° UNCOMMITED DATAë¥¼ RBSë¼ëŠ” ê³³ì— ë”°ë¡œ ë³´ê´€í•˜ë¯€ë¡œ ë°ì´í„° ë³€ê²½ê³¼ ë¬´ê´€í•˜ê²Œ ìž‘ì—… ê°€ëŠ¥
+## F. FETCH: ì¡°íšŒ ê²°ê³¼ì¤‘ ì¼ë¶€ë§Œ ì§€ì •í•´ì„œ ì²˜ë¦¬
   - [OFFSET ROWS] `FETCH` [`FIRST` | `NEXT`] [row_count | percent] `ROWS` [`ONLY` | `WITH TIES`]
-  - Ã¹ ÁÙ¸¸ ¾ò´Â °æ¿ì: (SELECT Äõ¸®) `FETCH FIRST 1 ROW ONLY`
-## G. Á÷Á¢ VIEW ¸¸µé¾î¼­ JOIN
+  - ì²« ì¤„ë§Œ ì–»ëŠ” ê²½ìš°: (SELECT ì¿¼ë¦¬) `FETCH FIRST 1 ROW ONLY`
+## G. ì§ì ‘ VIEW ë§Œë“¤ì–´ì„œ JOIN
 ```SQL
 LEFT OUTER JOIN (
-    SELECT 
+    SELECT
         C.CD_CLS_VAL AS PURCH_CO_CD
-    FROM 
+    FROM
         TABLE1
-    WHERE 
+    WHERE
         CD_VALD_VAL = ${cd_vald_val}
 ) TABLE1_C
 ON TABLE1_C.PURCH_CO_CD = A.PURCH_CO_CD
 ```
 ## H. DECODE
-- ´ë»óÄÃ·³À» Á¶°Ç¿¡ µû¶ó º¯°æ
-- ´Ü¼ø °ª Â÷ÀÌ¿¡ ÀÇÇÑ º¯°æÀÏ¶§ À¯¿ë
-- ³Ê¹« ¸¹Àº °æ¿ì °¡µ¶¼ºÀÌ ¶³¾îÁú ¼ö ÀÖÀ½
-  - Â÷¶ó¸® `CASE WHEN THEN ELSE END`°¡ °¡µ¶¼ºÀÌ ÁÁÀ» ¼ö ÀÖÀ½
+- ëŒ€ìƒì»¬ëŸ¼ì„ ì¡°ê±´ì— ë”°ë¼ ë³€ê²½
+- ë‹¨ìˆœ ê°’ ì°¨ì´ì— ì˜í•œ ë³€ê²½ì¼ë•Œ ìœ ìš©
+- ë„ˆë¬´ ë§Žì€ ê²½ìš° ê°€ë…ì„±ì´ ë–¨ì–´ì§ˆ ìˆ˜ ìžˆìŒ
+  - ì°¨ë¼ë¦¬ `CASE WHEN THEN ELSE END`ê°€ ê°€ë…ì„±ì´ ì¢‹ì„ ìˆ˜ ìžˆìŒ
 ```ORACLE
-DECODE(CONDITION_COLUMN, 'Á¶°Ç1','°á°ú1','Á¶°Ç2','°á°ú2', .., 'DEFAULT_VALUE') AS RETURN_COLUMN
+DECODE(CONDITION_COLUMN, 'ì¡°ê±´1','ê²°ê³¼1','ì¡°ê±´2','ê²°ê³¼2', .., 'DEFAULT_VALUE') AS RETURN_COLUMN
 ```
-## I. IN(...)¿¡µµ SELECT ¹® °¡´É
-## J. WITH ... AS ()·Î ÀÓ½ÃÅ×ÀÌºíÀ» ¸¸µé¸é ´õ °¡µ¶¼ºÀ» ³ôÀÏ ¼ö ÀÖ´Ù.
+## I. IN(...)ì—ë„ SELECT ë¬¸ ê°€ëŠ¥
+## J. WITH ... AS ()ë¡œ ìž„ì‹œí…Œì´ë¸”ì„ ë§Œë“¤ë©´ ë” ê°€ë…ì„±ì„ ë†’ì¼ ìˆ˜ ìžˆë‹¤.
 ```db2
 WITH TMP1 AS (
     SELECT
@@ -118,7 +118,7 @@ WITH TMP1 AS (
         TABLE1 A
         , TABLE2 B
         , TABLE3 C
-    WHERE 
+    WHERE
         A.SEQ = B.SEQ
         AND A.SEQ = C.SEQ
 ), TMP2 AS (
@@ -127,16 +127,16 @@ WITH TMP1 AS (
 SELECT * FROM TMP1, TMP2
 ```
 
-# II. È¸»çº°·Î ´Ù¸§
-## A. ±âº» DB2¿¡´Â ¾øÀ¸³ª ³»ºÎ¿¡¼­ ÇÔ¼ö³ª ÇÁ·Î½ÃÀú¸¦ ¸¸µé¾î³õ´Â °æ¿ì°¡ ÀÖÀ½
+# II. íšŒì‚¬ë³„ë¡œ ë‹¤ë¦„
+## A. ê¸°ë³¸ DB2ì—ëŠ” ì—†ìœ¼ë‚˜ ë‚´ë¶€ì—ì„œ í•¨ìˆ˜ë‚˜ í”„ë¡œì‹œì €ë¥¼ ë§Œë“¤ì–´ë†“ëŠ” ê²½ìš°ê°€ ìžˆìŒ
 - NVL
 - NVL2
 - DECODE
 - MERGE...
-## B. °¡»óÅ×ÀÌºí(VIEW) »ç¿ë½Ã dual ´ë½Å »ç¿ëÇÏ´Â °Í È®ÀÎ
+## B. ê°€ìƒí…Œì´ë¸”(VIEW) ì‚¬ìš©ì‹œ dual ëŒ€ì‹  ì‚¬ìš©í•˜ëŠ” ê²ƒ í™•ì¸
 - SYSIBM.SYSDUMMY1
-## C. °Ë»öÇÏ°í »ý°¢ÇÏÀÚ
-- ¾î¶² Äõ¸®¿¡ ´ëÇØ ÀÌÇØ°¡ µÇÁö ¾ÊÀ»¶§´Â
-  - ±× Å°¿öµå·Î °Ë»öÇØ »ç¿ëÇÏ´Â ¹æ½Ä Ã£¾Æº¸±â
-  - ±×·¡µµ ¸ð¸£°Ú´Ù¸é °Ë»ö
-  - ±×·¡µµ ¸ð¸£°Ú´Ù¸é Áú¹®
+## C. ê²€ìƒ‰í•˜ê³  ìƒê°í•˜ìž
+- ì–´ë–¤ ì¿¼ë¦¬ì— ëŒ€í•´ ì´í•´ê°€ ë˜ì§€ ì•Šì„ë•ŒëŠ”
+  - ê·¸ í‚¤ì›Œë“œë¡œ ê²€ìƒ‰í•´ ì‚¬ìš©í•˜ëŠ” ë°©ì‹ ì°¾ì•„ë³´ê¸°
+  - ê·¸ëž˜ë„ ëª¨ë¥´ê² ë‹¤ë©´ ê²€ìƒ‰
+  - ê·¸ëž˜ë„ ëª¨ë¥´ê² ë‹¤ë©´ ì§ˆë¬¸
